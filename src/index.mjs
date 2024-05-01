@@ -1,26 +1,30 @@
 import express from "express";
-import mysql from "mysql2";
+import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 dotenv.config();
 
 const PORT = 3000;
 const app = express();
 
-const connection = mysql.createConnection({
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
-});
+const getMysqlDataQuery = async () => {
+  const connection = await mysql.createConnection({
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
+  });
+  try {
+    await connection.connect();
+    console.log("Success connecting to MySQL");
 
-connection.connect((error) => {
-  if (error) {
-    console.error("Error connecting to MySQL: ", error);
-    return;
+    const [results, fields] = await connection.query(`SELECT * FROM ${process.env.MYSQL_DATABASE}`);
+    console.log(results, fields);
+  } catch (err) {
+    console.log(err);
   }
+};
 
-  console.log("Success connecting to MySQL");
-});
+getMysqlDataQuery();
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
