@@ -21,6 +21,8 @@ services:
     ports:
       - 3306:3306
     volumes:
+      # DB データ永続化
+      - mysql-prac:/var/lib/mysql
       # DB 文字化け対策
       - ./mysql/conf:/etc/mysql/conf.d
       # DB 初期設定
