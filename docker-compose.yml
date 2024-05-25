@@ -1,16 +1,39 @@
 services:
-  app:
-    image: express-mysql
-    container_name: express
-    build: ./
+  backend:
+    # image: backend-mysql
+    build: ./backend/dockerfile/
+    container_name: express-container
+    hostname: express-server
+    tty: true
+    ports:
+      - 3001:3001
+    working_dir: /app
+    depends_on:
+      - mysql
+    environment:
+      - NODE_ENV=DEVELOPMENT
+      - PORT=3001 # コンテナ内でのポート番号
+    volumes:
+      - ./backend:/app
+    networks:
+      - mysql-prac-network
+
+  frontend:
+    # image: next-mysql
+    build: ./frontend/dockerfile/
+    container_name: next-container
+    hostname: react-server
     tty: true
     ports:
       - 3000:3000
     working_dir: /app
     depends_on:
-      - mysql
+      - backend
+    environment:
+      - NODE_ENV=DEVELOPMENT
+      - PORT=3000 # コンテナ内でのポート番号
     volumes:
-      - ./:/app
+      - ./frontend:/app
     networks:
       - mysql-prac-network
 

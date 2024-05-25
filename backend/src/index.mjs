@@ -1,13 +1,21 @@
 import express from "express";
 import mysql from "mysql2/promise";
+import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 
 import { randomPrefecture } from "./util/prefectures.mjs";
 import { randomAge } from "./util/prefectures.mjs";
 
-const PORT = 3000;
+const PORT = 3001;
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    optionsSuccessStatus: 200,
+  })
+);
 
 const initDatabase = async () => {
   return mysql.createConnection({
