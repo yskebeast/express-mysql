@@ -87,17 +87,17 @@ app.post("/", async (req, res) => {
   res.send(result);
 });
 
-app.get("/saburo", async (req, res) => {
+app.get("/list", async (req, res) => {
   try {
     const connection = await initDatabase();
     await connection.connect();
 
-    const getSaburoData = await connection.query(
-      "SELECT * FROM user WHERE name = '長谷川三郎' ORDER BY age ASC"
+    const getData = await connection.query(
+      "SELECT * FROM user ORDER BY id DESC"
     );
-    console.log(getSaburoData[0]);
+    console.log(getData[0]);
     await connection.end();
-    res.send(JSON.stringify(getSaburoData[0]));
+    res.send(getData[0]);
   } catch (err) {
     console.log(err);
   }
