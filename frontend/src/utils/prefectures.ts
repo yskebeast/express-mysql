@@ -1,4 +1,5 @@
 export const prefectures: string[] = [
+  "-- select pref --",
   "北海道",
   "青森県",
   "岩手県",

@@ -72,7 +72,7 @@ export default function Page() {
   return (
     <div className="  w-full">
       <a className=" block p-3 bg-gray-400" href="/">
-        ホーム画面
+        HOME PAGE
       </a>
 
       <button onClick={deleteAccount}>delete account</button>

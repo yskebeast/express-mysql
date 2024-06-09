@@ -7,8 +7,6 @@ export default function Home() {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [pref, setPref] = useState(prefectures[0]);
-  const [result, setResult] = useState({ name: "", age: "", pref: "" });
-  const [error, setError] = useState(false);
 
   const handleNameChange: ChangeEventHandler<HTMLInputElement> = (event) =>
     setName(event.target.value);
@@ -53,55 +51,85 @@ export default function Home() {
 
       const res = await req.json();
       console.log("success!", res);
-      setError(false);
-      setResult({ name: res.name, age: res.age, pref: res.pref });
+      setName("あああああああああ");
+      setAge("");
+      setPref(prefectures[20]);
+      alert(`added ${name} to the list`);
     } catch (error) {
       console.log("failed", error);
-      setError(true);
+      alert("cannot add to the list");
     }
   };
 
   return (
     <main>
-      <div>
-        <a href="/list">一覧画面</a>
-      </div>
-      <h1>登録画面</h1>
+      <a className=" block p-3 bg-gray-400" href="/list">
+        LIST PAGE
+      </a>
+      <h1 className="text-center  text-3xl font-black">HOME PAGE</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          名前:
-          <input type="text" value={name} onChange={handleNameChange} />
-        </label>
+        <div>
+          <label
+            htmlFor="name"
+            className="block mb-2 text-sm font-medium text-black "
+          >
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="NAME"
+            required
+            onChange={handleNameChange}
+          />
+        </div>
         <br />
-        <label>
-          年齢:
-          <input type="number" min="0" value={age} onChange={handleAgeChange} />
-        </label>
+        <div>
+          <label
+            htmlFor="age"
+            className="block mb-2 text-sm font-medium text-black "
+          >
+            Age
+          </label>
+          <input
+            type="number"
+            id="age"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            required
+            min="0"
+            value={age}
+            onChange={handleAgeChange}
+          />
+        </div>
         <br />
-        <label>
-          都道府県:
-          <select value={pref} onChange={handlePrefChange}>
+        <div>
+          <label
+            htmlFor="pref"
+            className="block mb-2 text-sm font-medium text-black "
+          >
+            Pref
+          </label>
+          <select
+            value={pref}
+            onChange={handlePrefChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
             {prefectures.map((pref) => (
               <option key={pref} value={pref}>
                 {pref}
               </option>
             ))}
           </select>
-        </label>
+        </div>
         <br />
-        <button type="submit">登録</button>
+        <button
+          type="submit"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        >
+          SUBMIT
+        </button>
       </form>
-
-      <div>
-        {error && <p>エラーが発生しました</p>}
-        {error || (
-          <>
-            <p>名前: {result.name}</p>
-            <p>年齢: {result.age}</p>
-            <p>都道府県: {result.pref}</p>
-          </>
-        )}
-      </div>
     </main>
   );
 }
