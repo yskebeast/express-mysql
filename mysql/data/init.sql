@@ -2,7 +2,9 @@ CREATE TABLE IF NOT EXISTS user (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     age INT,
-    pref VARCHAR(255)
+    pref VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    flag BOOLEAN DEFAULT FALSE
 );
 
 INSERT INTO user (name, age, pref) VALUES ('田中太郎', 25, '北海道');
