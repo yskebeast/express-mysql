@@ -63,6 +63,9 @@ export default function Home() {
 
   return (
     <main>
+      <div>
+        <a href="/list">一覧画面</a>
+      </div>
       <h1>登録画面</h1>
       <form onSubmit={handleSubmit}>
         <label>
